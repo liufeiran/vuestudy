@@ -1,0 +1,7 @@
+[
+	{"name":"A","isShow":false,"is":false,"list":[1,2,3,4,5,6],"listSelect":[]},
+	{"name":"B","isShow":false,"is":false,"list":[10,20,30,40,50],"listSelect":[]},
+	{"name":"C","isShow":false,"is":false,"list":[100,200,300,400,500,600,700],"listSelect":[]},
+	{"name":"D","isShow":false,"is":false,"list":[1000,2000,3000,4000],"listSelect":[]},
+	{"name":"E","isShow":false,"is":false,"list":["01","02","03","04","05"],"listSelect":[]}
+]

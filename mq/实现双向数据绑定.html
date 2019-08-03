@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link href="" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	
+</style>
+</head>
+<body>
+
+<div id="app">
+	<input type="text" v-model="name" /><br />
+	<input type="text" v-model="name" /><br />
+	<input type="text" v-model="age" /><br />
+	<p>{{name}}</p>
+	<p>{{age}}</p>
+</div>
+
+
+
+<script type="text/javascript" charset="UTF-8">
+//初始化的渲染
+let data = {name:"珠峰",age:8};
+let app = document.getElementById('app');
+let inputs = app.getElementsByTagName('input');
+//获取app下面除了input之外的所有子元素节点
+let nodeList = [...app.children].filter(item=>item.nodeName!="INPUT");
+let cloneList = nodeList.map(item=>item.cloneNode(true));//克隆一份虚拟的dom，否则页面渲染一次后就没有{{}}这个语法了
+console.log(nodeList);
+for(let item of inputs){
+	if(item.getAttribute("v-model")){
+		item.value = data[item.getAttribute("v-model")];
+	}
+	item.oninput = function(){
+		data[this.getAttribute("v-model")]=this.value
+	}
+}
+let reg = /\{\{(\w+)}}/;
+nodeList.forEach((item)=>{
+	if(reg.test(item.innerHTML)){
+		//console.log(item);
+		item.innerHTML = item.innerHTML.replace(reg,(...arg)=>data[arg[1]])
+	}
+});
+
+
+//
+Object.defineProperties(data,{
+	name:{
+		set(val){
+			//console.log(this);//this就是当前data
+			for(let item of inputs){
+				if(item.getAttribute("v-model")=="name"){
+					item.value = val;
+				}
+			}
+			cloneList.forEach((item,index)=>{
+				nodeList[index].innerHTML = item.innerHTML.replace(/\{\{name}}/g,()=>val);
+				//通过索引找到对应的innerHTML，改变它的内容
+			})
+		},
+		get(){
+			
+		}
+	},
+	age:{
+		set(val){
+			for(let item of inputs){
+				if(item.getAttribute("v-model")=="age"){
+					item.value = val;
+				}
+			}
+			cloneList.forEach((item,index)=>{
+				nodeList[index].innerHTML = item.innerHTML.replace(/\{\{age}}/g,()=>val);
+			})
+		},
+		get(){
+			
+		}
+	},
+});
+//data={name:"mq",age:10};//只要修改就会触发set()方法
+//有问题，改变name，age就变成{{age}},改变age,name 就变成{{name}}了
+console.log(data);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

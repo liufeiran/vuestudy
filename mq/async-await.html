@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link href="../node_modules/bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+
+<script type="text/javascript">
+	let f = async function fn(){
+		throw new Error('sorry')
+		return 1
+	}
+//	f().then((res)=>{
+//		console.log(res)
+//	},(e)=>{
+//		console.log(e)
+//	});
+	
+	
+	let ff = async function f1(){
+		let a = await new Promise((resolve,reject)=>{
+			//await语法糖，他将当前promise对象直接拿到结果，不用再通过then方法catch方法拿结果了，把复杂的简化了，就是如果成功了（走resolve）直接可以拿到111赋值给a
+			setTimeout(()=>{//就算加了定时器，也会等到时间后执行完成才会继续往下走
+				resolve(111);//成功的结果
+			},1000)
+			
+			//reject("sorry")//失败的结果，这俩不能并存，一般放在if(){resolve}else{reject}中
+		});
+		console.log(a);
+	}
+	ff();
+	
+	//否则就要这样拿到
+//	new Promise((resolve,reject)=>{
+//		resolve(111)
+//	}).then((res)=>{
+//		console.log(res)
+//	})''
+</script>
+</body>
+</html>

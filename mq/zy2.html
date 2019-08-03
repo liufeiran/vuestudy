@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>Vue实现二级菜单的显示与隐藏</title>
+    <script src="vue.js"></script>
+    <style type="text/css">
+     *{
+         padding: 0;
+         margin: 0;      
+         font-size: 14px;    
+      }  
+      
+     ul{      
+         width: 200px;      
+         height: auto;   
+     } 
+
+     h2{      
+         background: green;      
+         border: 1px solid #fff;      
+         color: #fff;      
+         height: 30px;      
+         line-height: 30px;      
+         text-indent: 24px;    
+     }  
+
+      h3{      
+         background: #999;      
+         height: 24px;      
+         line-height: 24px;      
+         border: 1px solid #fff;      
+         text-indent: 50px;    
+     }       
+    </style>
+  </head>
+  <body>
+    <div id="nav">
+      <ul>
+        <li v-for="item in items">
+          <h2 @click="showToggle(item)">{{ item.name }}</h2>
+          <ul v-show="item.isSubshow">
+            <li v-for="subItem in item.subItems">
+              <h3>{{ subItem.name }}</h3>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js" type="text/javascript"></script>
+    <script>
+     new Vue({
+       el:"#nav",
+       data:{
+         items:[
+           { 
+              name: "Web前端",
+              isSubshow:false,
+              subItems:[{name:"HTML"},{ name:"Css"},{name:"JavaScript"}]
+           },
+           {
+              name:"写代码的兔子",
+              isSubshow:false,
+              subItems:[{name:"Vue组件"},{name:"Vue实现下拉菜单"},{name:"Vue实现简易留言板"}]
+           }
+         ]
+       },
+       methods:{
+         showToggle:function(item){
+           item.isSubshow = !item.isSubshow;
+         }
+       }
+     })
+    
+    </script>
+</body>
+</html>
